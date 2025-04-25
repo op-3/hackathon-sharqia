@@ -1,10 +1,11 @@
 import Link from "next/link";
+import ImageSlider from "../components/ImageSlider";
 
 export default function Home() {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-teal-600 via-teal-700 to-teal-900 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-teal-600 via-teal-700 to-teal-900 text-white py-20 md:py-28">
         {/* Animated Background Pattern */}
         <div className="absolute top-0 left-0 w-full h-full opacity-15">
           <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
@@ -15,45 +16,56 @@ export default function Home() {
         <div className="absolute top-1/2 right-1/3 w-72 h-72 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 md:py-36 relative z-10">
-          <div className="text-center md:text-right md:flex md:items-center md:justify-between">
-            <div className="md:w-3/5">
-              <span className="inline-block px-3 py-1 bg-white/10 text-cyan-100 rounded-full text-sm font-semibold backdrop-blur-sm mb-6">منصة تعليمية رائدة</span>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                منصتك الأكاديمية <span className="text-cyan-300 relative">
-                  المتكاملة
-                  <span className="absolute bottom-1 left-0 w-full h-2 bg-cyan-300/20 rounded-full"></span>
-                </span>
-              </h1>
-              <p className="text-lg md:text-xl mb-10 text-gray-100 max-w-2xl md:mr-0 mx-auto leading-relaxed">
-                رحلتك الأكاديمية تبدأ من هنا. منصة أكاديمي بلس توفر لك جميع الموارد التي تحتاجها لتحقيق النجاح في دراستك الجامعية.
-              </p>
-              <div className="flex flex-col sm:flex-row justify-center md:justify-end gap-5">
-                <Link href="/register" className="bg-gradient-to-r from-white to-gray-100 text-teal-800 hover:from-gray-100 hover:to-white transition-all px-8 py-5 rounded-xl font-bold shadow-xl hover:shadow-2xl transform hover:-translate-y-1 flex items-center justify-center">
-                  <span>انضم إلينا</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 rtl:rotate-180" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </Link>
-                <Link href="/about" className="relative overflow-hidden border-2 border-white/70 text-white hover:bg-white/10 transition-all px-8 py-5 rounded-xl font-medium group">
-                  <span className="relative z-10">اكتشف المزيد</span>
-                  <div className="absolute inset-0 translate-y-[105%] bg-white/10 transition-transform duration-300 group-hover:translate-y-0"></div>
-                </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-right md:flex md:items-center md:justify-between">
+            <div className="md:w-3/5 mx-0 mr-auto md:mr-0">
+              <div className="flex flex-col items-start">
+                <span className="inline-block px-3 py-1 bg-white/10 text-cyan-100 rounded-full text-sm font-semibold backdrop-blur-sm mb-6">نحو مستقبل أكاديمي مشرق</span>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight text-right w-full">
+                  نساعدك لتحقيق <span className="text-cyan-300 relative">
+                    أحلامك التعليمية
+                    <span className="absolute bottom-1 left-0 w-full h-2 bg-cyan-300/20 rounded-full"></span>
+                  </span>
+                </h1>
+                <p className="text-lg md:text-xl mb-10 text-gray-100 max-w-2xl text-right w-full">
+                  كل خطوة في رحلتك الأكاديمية مهمة، ونحن هنا لنمسك بيدك من أول يوم دراسي وحتى التخرج. لأن نجاحك هو هدفنا الأول، ومستقبلك هو ما نسعى إليه معاً.
+                </p>
+                
+                {/* Testimonial Bubbles */}
+                <div className="flex flex-wrap justify-start gap-3 mb-8 w-full">
+                  <div className="bg-white/10 p-3 rounded-xl max-w-xs backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all">
+                    <p className="text-sm text-gray-100 mb-2 text-right">
+                      &quot;تغيرت حياتي الأكاديمية بشكل كامل مع أكاديمي بلس. من طالب متعثر إلى متفوق في دفعتي!&quot;
+                    </p>
+                    <p className="text-xs text-cyan-200 font-medium text-left">- أحمد الريامي، طالب هندسة</p>
+                  </div>
+                  <div className="bg-white/10 p-3 rounded-xl max-w-xs backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all">
+                    <p className="text-sm text-gray-100 mb-2 text-right">
+                      &quot;لم أكن أحلم بالنجاح الذي حققته الآن. شكراً لمنصة أكاديمي بلس على الدعم المستمر.&quot;
+                    </p>
+                    <p className="text-xs text-cyan-200 font-medium text-left">- نورة الحارثي، طالبة طب</p>
+                  </div>
+                </div>
+                
+                {/* أزرار */}
+                <div className="flex flex-col sm:flex-row justify-start gap-5 w-full">
+                  <Link href="/register" className="bg-gradient-to-r from-white to-gray-100 text-teal-800 hover:from-gray-100 hover:to-white transition-all px-8 py-5 rounded-xl font-bold shadow-xl hover:shadow-2xl transform hover:-translate-y-1 flex items-center justify-center">
+                    <span>انضم لعائلتنا</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 rtl:rotate-180" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </Link>
+                  <Link href="/about" className="relative overflow-hidden border-2 border-white/70 text-white hover:bg-white/10 transition-all px-8 py-5 rounded-xl font-medium group">
+                    <span className="relative z-10">اكتشف قصص النجاح</span>
+                    <div className="absolute inset-0 translate-y-[105%] bg-white/10 transition-transform duration-300 group-hover:translate-y-0"></div>
+                  </Link>
+                </div>
               </div>
             </div>
             
             <div className="hidden md:block md:w-2/5 mt-10 md:mt-0">
-              <div className="relative mx-auto w-full max-w-md">
-                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-cyan-400 to-teal-400 opacity-75 blur-xl"></div>
-                <div className="relative overflow-hidden rounded-2xl bg-white/10 p-1.5 backdrop-blur-sm">
-                  <img 
-                    src="/images/student-dashboard.svg" 
-                    alt="منصة أكاديمي بلس" 
-                    className="w-full h-auto rounded-xl shadow-2xl"
-                  />
-                </div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-cyan-400 rounded-full mix-blend-multiply filter blur-xl opacity-70"></div>
-              </div>
+              {/* Professional Image Slider */}
+              <ImageSlider />
             </div>
           </div>
         </div>
@@ -184,7 +196,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Testimonials Section - We'll keep this section but focus more on student success stories */}
       <section className="py-28 bg-white relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-teal-50/80 to-gray-50/40 opacity-70"></div>
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-200 to-transparent"></div>
@@ -192,12 +204,12 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
-            <span className="inline-block px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-sm font-semibold mb-4">قالوا عنا</span>
+            <span className="inline-block px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-sm font-semibold mb-4">قصص نجاح</span>
             <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6">
-              <span className="bg-gradient-to-r from-teal-600 to-cyan-500 bg-clip-text text-transparent">آراء الطلاب</span>
+              <span className="bg-gradient-to-r from-teal-600 to-cyan-500 bg-clip-text text-transparent">رحلة طلابنا نحو التفوق</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              تعرف على تجارب طلابنا وكيف ساهمت منصة أكاديمي بلس في تحسين مستواهم الأكاديمي
+              تعرف على تجارب طلابنا وكيف ساهمت منصة أكاديمي بلس في تحسين مستواهم الأكاديمي وتحقيق أحلامهم
             </p>
           </div>
           
@@ -210,7 +222,7 @@ export default function Home() {
                 </svg>
               </div>
               <p className="text-gray-700 leading-relaxed text-lg mb-8">
-                &quot;ساعدتني منصة أكاديمي بلس في الحصول على ملخصات متميزة للمواد الهندسية الصعبة. كما أن المنتدى كان مكاناً رائعاً لطرح أسئلتي والحصول على إجابات من زملائي المتفوقين.&quot;
+                &quot;ساعدتني منصة أكاديمي بلس في الحصول على ملخصات متميزة للمواد الهندسية الصعبة. حياتي الدراسية تغيرت بشكل كامل.&quot;
               </p>
               <div className="flex items-center">
                 <div className="w-14 h-14 rounded-full bg-gradient-to-r from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-xl mr-4 shadow-md">أ</div>
@@ -229,7 +241,7 @@ export default function Home() {
                 </svg>
               </div>
               <p className="text-gray-700 leading-relaxed text-lg mb-8">
-                &quot;استفدت كثيراً من الدورات التدريبية المتخصصة في مجال الطب. المحتوى عالي الجودة والخبراء متميزون. أنصح بشدة جميع الطلاب بالانضمام إلى أكاديمي بلس لتحسين مستواهم الأكاديمي.&quot;
+                &quot;استفدت كثيراً من الدورات التدريبية. محتوى متميز والخبراء دعموني في كل خطوة. كان هذا سر تفوقي.&quot;
               </p>
               <div className="flex items-center">
                 <div className="w-14 h-14 rounded-full bg-gradient-to-r from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-xl mr-4 shadow-md">ن</div>
