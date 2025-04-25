@@ -13,7 +13,7 @@ export const MODEL_ID = 'openai/gpt-3.5-turbo';
  * @param obj The object to inspect
  * @returns The first string content found or null if none
  */
-const extractTextContent = (obj: any): string | null => {
+const extractTextContent = (obj: Record<string, unknown> | string | unknown[] | null | undefined): string | null => {
   // Base cases
   if (typeof obj === 'string') {
     return obj;
@@ -30,24 +30,28 @@ const extractTextContent = (obj: any): string | null => {
   ];
   
   // Try direct access to common content fields
-  for (const field of contentFields) {
-    if (typeof obj[field] === 'string' && obj[field].trim()) {
-      return obj[field];
-    }
-    
-    // Check one level deeper for nested contents
-    if (obj[field] && typeof obj[field] === 'object') {
-      const nestedContent = extractTextContent(obj[field]);
-      if (nestedContent) {
-        return nestedContent;
+  if (!Array.isArray(obj)) {
+    // If it's a record object
+    const record = obj as Record<string, unknown>;
+    for (const field of contentFields) {
+      if (typeof record[field] === 'string' && record[field] as string) {
+        return record[field] as string;
+      }
+      
+      // Check one level deeper for nested contents
+      if (record[field] && typeof record[field] === 'object') {
+        const nestedContent = extractTextContent(record[field] as Record<string, unknown> | unknown[]);
+        if (nestedContent) {
+          return nestedContent;
+        }
       }
     }
   }
   
   // Look for content in choices array
-  if (Array.isArray(obj.choices) && obj.choices.length > 0) {
-    for (const choice of obj.choices) {
-      const choiceContent = extractTextContent(choice);
+  if (!Array.isArray(obj) && 'choices' in obj && Array.isArray(obj.choices)) {
+    for (const choice of obj.choices as unknown[]) {
+      const choiceContent = extractTextContent(choice as Record<string, unknown>);
       if (choiceContent) {
         return choiceContent;
       }
@@ -57,7 +61,7 @@ const extractTextContent = (obj: any): string | null => {
   // If we have an array, try to find content in its items
   if (Array.isArray(obj) && obj.length > 0) {
     for (const item of obj) {
-      const itemContent = extractTextContent(item);
+      const itemContent = extractTextContent(item as Record<string, unknown> | string | unknown[]);
       if (itemContent) {
         return itemContent;
       }
@@ -65,16 +69,19 @@ const extractTextContent = (obj: any): string | null => {
   }
   
   // Still nothing? Try to find any string property longer than 50 chars
-  for (const key in obj) {
-    if (typeof obj[key] === 'string' && obj[key].length > 50) {
-      return obj[key];
-    }
-    
-    // Recurse into objects but avoid circular references
-    if (obj[key] && typeof obj[key] === 'object' && obj[key] !== obj) {
-      const deepContent = extractTextContent(obj[key]);
-      if (deepContent) {
-        return deepContent;
+  if (!Array.isArray(obj)) {
+    const record = obj as Record<string, unknown>;
+    for (const key in record) {
+      if (typeof record[key] === 'string' && (record[key] as string).length > 50) {
+        return record[key] as string;
+      }
+      
+      // Recurse into objects but avoid circular references
+      if (record[key] && typeof record[key] === 'object' && record[key] !== obj) {
+        const deepContent = extractTextContent(record[key] as Record<string, unknown> | unknown[]);
+        if (deepContent) {
+          return deepContent;
+        }
       }
     }
   }
@@ -525,7 +532,19 @@ export const sendChatMessage = async (
     referer?: string;
     appName?: string;
   } = {}
-): Promise<any> => {
+): Promise<{
+  choices: Array<{
+    message: {
+      role: string;
+      content: string;
+    };
+    index: number;
+  }>;
+  created: number;
+  id: string;
+  model: string;
+  object: string;
+}> => {
   const { temperature = 0.7, maxTokens = 2000, referer = "https://academy-plus.com", appName = "Academy Plus AI" } = options;
 
   try {

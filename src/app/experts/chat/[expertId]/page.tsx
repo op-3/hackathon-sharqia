@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 
 // Types
@@ -121,7 +121,6 @@ const expertsData: Expert[] = [
 
 export default function ChatPage() {
   const { expertId } = useParams();
-  const router = useRouter();
   const [expert, setExpert] = useState<Expert | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
@@ -225,17 +224,12 @@ export default function ChatPage() {
     }, 1500);
   };
 
-  // Handle Enter key to send message
+  // Handle keyboard events in the message input
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
-  };
-
-  // Handle back to experts list
-  const handleBackToExperts = () => {
-    router.push("/experts");
   };
 
   if (!expert) {
