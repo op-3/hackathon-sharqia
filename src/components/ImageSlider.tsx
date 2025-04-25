@@ -13,13 +13,17 @@ export default function ImageSlider() {
   const images = [
     '/images/handshake-5768632.jpg',
     '/images/handshake-5760544.jpg',
-    '/images/ai-generated-8295617.jpg'
+    '/images/ai-generated-8295617.jpg',
+    '/images/Graduation - Cap throw.webp',
+    '/images/brightspotcdn.byu.jpg'
   ];
   
   const captions = [
     { title: "التعاون والثقة", description: "بناء جسور المعرفة من خلال التعاون المستمر والثقة المتبادلة" },
     { title: "النجاح المهني", description: "نساعدك على بناء مستقبلك المهني وتحقيق طموحاتك الأكاديمية" },
-    { title: "تجربة تعليمية متميزة", description: "نقدم تجربة تعليمية ثرية تجمع بين المعرفة النظرية والتطبيق العملي" }
+    { title: "تجربة تعليمية متميزة", description: "نقدم تجربة تعليمية ثرية تجمع بين المعرفة النظرية والتطبيق العملي" },
+    { title: "لحظات التخرج", description: "نفخر بطلابنا ونحتفل معهم بلحظات النجاح والإنجاز في مسيرتهم التعليمية" },
+    { title: "الحياة الجامعية", description: "أجواء دراسية محفزة تجمع بين المعرفة والصداقات والأنشطة الطلابية المتنوعة" }
   ];
   
   // Navigation functions
