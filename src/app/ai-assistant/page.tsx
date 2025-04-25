@@ -9,7 +9,7 @@ import {
   sendChatMessage,
   MODEL_ID,
   generateBasicSummary
-} from "../../utils/openRouterAPI";
+} from "@/utils/openRouterAPI";
 import axios, { AxiosError } from 'axios';
 
 // Types
@@ -26,7 +26,7 @@ type ChatMessage = {
 };
 
 export default function AIAssistantPage() {
-  const [file, setFile] = useState<FileInfo | null>(null);
+  const [files, setFiles] = useState<FileInfo[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -88,12 +88,15 @@ export default function AIAssistantPage() {
       // Read file contents
       const fileContent = await readFileContent(selectedFile);
       
-      setFile({
-        name: selectedFile.name,
-        size: selectedFile.size,
-        type: selectedFile.type,
-        content: fileContent,
-      });
+      setFiles(prev => [
+        ...prev,
+        {
+          name: selectedFile.name,
+          size: selectedFile.size,
+          type: selectedFile.type,
+          content: fileContent,
+        },
+      ]);
 
       // Add user message about uploading the file
       const fileSizeFormatted = formatFileSize(selectedFile.size);
@@ -297,7 +300,7 @@ export default function AIAssistantPage() {
 
   // Reset the state to upload another file
   const handleReset = () => {
-    setFile(null);
+    setFiles([]);
     setErrorMessage(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -415,7 +418,7 @@ export default function AIAssistantPage() {
                   
                   <div className="flex items-center justify-between">
                     <p className="text-sm text-gray-600 mb-2">أو يمكنك رفع ملف للتلخيص:</p>
-                    {file && (
+                    {files.length > 0 && (
                       <button 
                         onClick={handleReset}
                         className="text-sm text-red-500 hover:text-red-700 transition-colors"
@@ -426,7 +429,7 @@ export default function AIAssistantPage() {
                     )}
                   </div>
                   
-                  {!file ? (
+                  {files.length === 0 ? (
                     <div 
                       onClick={handleUploadClick}
                       className="border-2 border-dashed border-teal-300 rounded-xl p-4 text-center cursor-pointer hover:bg-teal-50 transition-all"
@@ -458,8 +461,8 @@ export default function AIAssistantPage() {
                           </svg>
                         </div>
                         <div className="mr-3">
-                          <p className="font-medium text-gray-900 truncate text-sm" dir="ltr">{file.name}</p>
-                          <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+                          <p className="font-medium text-gray-900 truncate text-sm" dir="ltr">{files[files.length - 1].name}</p>
+                          <p className="text-xs text-gray-500">{formatFileSize(files[files.length - 1].size)}</p>
                         </div>
                       </div>
                     </div>

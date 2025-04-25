@@ -1,4 +1,5 @@
 // OpenRouter API integration with OpenAI model
+import axios from 'axios';
 
 // API key for OpenRouter
 export const OPENROUTER_API_KEY = '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';
@@ -511,7 +512,7 @@ export const getFileExtension = (mimeType: string): string => {
 };
 
 /**
- * Sends a message to the OpenRouter API and returns the response
+ * Sends a message to the OpenRouter API and returns the response using Axios
  * @param messages Array of messages to send to the API
  * @param options Additional options for the API
  * @returns Promise that resolves to the API response
@@ -525,7 +526,7 @@ export const sendChatMessage = async (
     appName?: string;
   } = {}
 ): Promise<any> => {
-  const { temperature = 0.7, maxTokens = 2000, referer = "", appName = "Academy Plus AI" } = options;
+  const { temperature = 0.7, maxTokens = 2000, referer = "https://academy-plus.com", appName = "Academy Plus AI" } = options;
 
   try {
     console.log(`Sending chat request to model: ${MODEL_ID}`);
@@ -541,26 +542,17 @@ export const sendChatMessage = async (
     // Log the complete request for debugging
     console.log("OpenRouter request payload:", JSON.stringify(payload, null, 2));
     
-    const response = await fetch(API_URL, {
-      method: 'POST',
+    const response = await axios.post(API_URL, payload, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-        ...(referer ? { 'HTTP-Referer': referer } : {}),
-        ...(appName ? { 'X-Title': appName } : {})
-      },
-      body: JSON.stringify(payload)
+        'HTTP-Referer': referer,
+        'X-Title': appName
+      }
     });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      console.error(`OpenRouter API error (${response.status}):`, errorData);
-      throw new Error(`API error: ${response.status} ${JSON.stringify(errorData)}`);
-    }
-
-    const result = await response.json();
     console.log("OpenRouter successful response received");
-    return result;
+    return response.data;
   } catch (error) {
     console.error('Error sending chat message:', error);
     throw error;
